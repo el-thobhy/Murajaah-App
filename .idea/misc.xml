@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/drawable/bg_btn_logout.xml" value="0.11041666666666666" />
+        <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/drawable/bg_btn_primary.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/drawable/bg_edit_text.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/drawable/bt_btn_auth.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/layout/activity_login.xml" value="0.22" />
@@ -12,6 +14,7 @@
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/layout/fragment_my_track.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/layout/fragment_top_album.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/layout/fragment_top_charts.xml" value="0.1" />
+        <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/layout/fragment_user.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/layout/item_album.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/layout/item_song.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/Murajaah/app/src/main/res/menu/main_menu.xml" value="0.1" />
