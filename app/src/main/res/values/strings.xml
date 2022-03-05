@@ -20,4 +20,5 @@
     <string name="update">Update</string>
     <string name="by">by</string>
     <string name="time_start">0:00</string>
+    <string name="old_password">Old Password</string>
 </resources>
