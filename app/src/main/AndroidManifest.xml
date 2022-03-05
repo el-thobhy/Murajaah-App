@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Murajaah">
         <activity
+            android:name=".views.playsong.PlaySongActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.detailalbum.DetailAlbumActivity"
             android:exported="false" />
         <activity

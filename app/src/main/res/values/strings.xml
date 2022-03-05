@@ -19,4 +19,5 @@
     <string name="edit_user">Edit User</string>
     <string name="update">Update</string>
     <string name="by">by</string>
+    <string name="time_start">0:00</string>
 </resources>
