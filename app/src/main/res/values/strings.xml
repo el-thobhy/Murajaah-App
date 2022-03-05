@@ -16,4 +16,6 @@
     <string name="logout">Logout</string>
     <string name="change_password">Change Password</string>
     <string name="change_language">Change Language</string>
+    <string name="edit_user">Edit User</string>
+    <string name="update">Update</string>
 </resources>
