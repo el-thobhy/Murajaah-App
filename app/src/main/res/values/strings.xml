@@ -8,4 +8,8 @@
     <string name="full_name">Full Name</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_member_login">Already Member? Login</string>
+    <string name="top_charts">Top Charts</string>
+    <string name="my_tracks">My Tracks</string>
+    <string name="top_albums">Top Albums</string>
+    <string name="user">User</string>
 </resources>
