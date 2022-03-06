@@ -81,6 +81,20 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/btn_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:layout_marginTop="12dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/ti_password"
+            app:layout_constraintEnd_toEndOf="@id/ti_password"/>
+
         <ImageView
             android:id="@+id/image_view_bg_bot"
             android:layout_width="match_parent"

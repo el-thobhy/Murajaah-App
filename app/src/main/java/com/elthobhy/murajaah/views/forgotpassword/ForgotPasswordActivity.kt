@@ -2,6 +2,7 @@ package com.elthobhy.murajaah.views.forgotpassword
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.elthobhy.murajaah.R
 import com.elthobhy.murajaah.databinding.ActivityForgotPasswordBinding
 
@@ -28,7 +29,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         }
 
         binding?.btnForgotPassword?.setOnClickListener {
-
+            Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
         }
     }
 
