@@ -10,10 +10,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Murajaah">
         <activity
+            android:name=".views.forgotpassword.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.changepassword.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.playsong.PlaySongActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.detailalbum.DetailAlbumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.edituser.EditUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.register.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
