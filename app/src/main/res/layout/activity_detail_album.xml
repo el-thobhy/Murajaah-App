@@ -97,6 +97,7 @@
                     app:layout_constraintEnd_toEndOf="@id/tv_name_album"/>
 
                 <TextView
+                    android:id="@+id/tv_release_album"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/default_text"

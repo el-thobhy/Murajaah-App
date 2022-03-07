@@ -1,6 +1,7 @@
 package com.elthobhy.murajaah.models
 
 import android.os.Parcelable
+import com.google.firebase.database.Exclude
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -24,4 +25,9 @@ data class Album(
 
 	@field:SerializedName("image_album")
 	val imageAlbum: String? = null
-) : Parcelable
+) : Parcelable{
+	@Exclude
+	fun getAlbum(): String{
+		return "Album - $yearAlbum"
+	}
+}

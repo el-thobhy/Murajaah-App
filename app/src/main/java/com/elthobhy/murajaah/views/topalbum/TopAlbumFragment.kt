@@ -51,8 +51,12 @@ class TopAlbumFragment : Fragment() {
 
     private fun onClick() {
         topAlbumAdapter.onClick{albums->
-            startActivity(Intent(context, DetailAlbumActivity::class.java))
+            val intent = Intent(context, DetailAlbumActivity::class.java)
+            intent.putExtra(DetailAlbumActivity.KEY_ALBUM, albums)
+            startActivity(intent)
         }
+
+
     }
 
     private fun hideLoading() {
