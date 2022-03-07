@@ -83,8 +83,10 @@ class DetailAlbumActivity : AppCompatActivity() {
             finish()
         }
 
-        songAlbumAdapter.onClick{mutableList , i ->
+        songAlbumAdapter.onClick{songs , position ->
             val intent = Intent(this, PlaySongActivity::class.java)
+            intent.putParcelableArrayListExtra(PlaySongActivity.KEY_SONGS, ArrayList(songs))
+            intent.putExtra(PlaySongActivity.KEY_POSITION, position)
             startActivity(intent)
         }
     }
