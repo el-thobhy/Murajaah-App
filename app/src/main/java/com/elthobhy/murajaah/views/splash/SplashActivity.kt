@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.elthobhy.murajaah.R
+import com.elthobhy.murajaah.repository.Repository
 import com.elthobhy.murajaah.views.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -13,6 +15,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        Log.d("json topcharts", "onCreate: ${Repository.getFataTopAlbumFromAssets(this)?.size}")
+        Log.d("json topcharts", "onCreate: ${Repository.getFataTopChartFromAssets(this)?.size}")
         goToLogin()
     }
 
