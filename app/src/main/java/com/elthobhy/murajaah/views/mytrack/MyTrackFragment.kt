@@ -42,7 +42,10 @@ class MyTrackFragment : Fragment() {
 
     private fun onClick() {
         myTracksAdapter.onClick{songs, position->
-            startActivity(Intent(context, PlaySongActivity::class.java))
+            val intent = Intent(context, PlaySongActivity::class.java)
+            intent.putParcelableArrayListExtra(PlaySongActivity.KEY_SONGS, ArrayList(songs))
+            intent.putExtra(PlaySongActivity.KEY_POSITION, position)
+            startActivity(intent)
         }
     }
 
