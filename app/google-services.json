@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "818508254623",
+    "project_id": "murajaah-f040b",
+    "storage_bucket": "murajaah-f040b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818508254623:android:d27439e22957b7338bc1aa",
+        "android_client_info": {
+          "package_name": "com.elthobhy.murajaah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818508254623-h0pcg6morrgsj0tdp949s09jl4r6r27b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKILO6IN58t1BpYen-mvfyaTPZYMxR4uY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818508254623-h0pcg6morrgsj0tdp949s09jl4r6r27b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
