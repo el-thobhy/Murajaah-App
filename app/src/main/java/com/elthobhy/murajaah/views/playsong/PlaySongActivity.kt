@@ -31,6 +31,28 @@ class PlaySongActivity : AppCompatActivity() {
     private lateinit var databaseMyTrack : DatabaseReference
     private var isMyTrack = false
 
+    private val eventListenerCheckTrack = object : ValueEventListener{
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val song = songs?.get(position)
+            if (snapshot.value != null){
+                for(snap in snapshot.children){
+                    if (snap.key == song?.keySong){
+                        isMyTrack=true
+                        checkLikeButton()
+                        break
+                    }else{
+                        isMyTrack=false
+                        checkLikeButton()
+                    }
+                }
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            Log.e("error", "onCancelled: ${error.message}", )
+        }
+    }
+
     private val evenListener = object : ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
             val data = snapshot.value
@@ -97,6 +119,15 @@ class PlaySongActivity : AppCompatActivity() {
                 initView(song)
             }
         }
+        //get data mutrack
+        checkMytrack()
+    }
+
+    private fun checkMytrack() {
+        databaseMyTrack
+            .child(currentUser?.uid.toString())
+            .child("my_tracks")
+            .addListenerForSingleValueEvent(eventListenerCheckTrack)
     }
 
     private fun initView(song: Song) {
@@ -188,7 +219,7 @@ class PlaySongActivity : AppCompatActivity() {
     }
 
     private fun checkMusicButton() {
-        if(musicPlayer?.isPlaying == true){
+        if(musicPlayer?.isPlaying == true && musicPlayer != null){
             binding?.btnPlaySong?.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.icon_pause))
         }else{
             binding?.btnPlaySong?.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_baseline_play_circle_80))
@@ -225,9 +256,11 @@ class PlaySongActivity : AppCompatActivity() {
         }
         binding?.btnNextSong?.setOnClickListener {
             playNextSong()
+            checkMytrack()
         }
         binding?.btnPrevSong?.setOnClickListener {
             playPrevSong()
+            checkMytrack()
 
         }
         binding?.btnPlaySong?.setOnClickListener {
