@@ -140,7 +140,7 @@ class PlaySongActivity : AppCompatActivity() {
                 .placeholder(android.R.color.darker_gray)
                 .into(it)
         }
-        playSong(song)
+//        playSong(song)
     }
 
     private fun checkButtonPrevNext() {
