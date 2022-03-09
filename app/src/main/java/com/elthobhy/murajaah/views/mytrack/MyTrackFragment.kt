@@ -32,13 +32,14 @@ class MyTrackFragment : Fragment() {
     private val eventListener = object : ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
             hideLoading()
-            val gson = Gson().toJson(snapshot.value)
-            val type = object : TypeToken<MutableList<Song>>(){}.type
-            val myTracks = Gson().fromJson<MutableList<Song>>(gson, type)
+            val songs = mutableListOf<Song>()
 
-            if(myTracks!=null){
-                hideEmptyData()
-                myTracksAdapter.setData(myTracks)
+            if (snapshot.value!=null){
+                for (snap in snapshot.children){
+                    val song = snap.getValue(Song::class.java)
+                    if(song!=null) songs.add(song)
+                }
+                myTracksAdapter.setData(songs)
             }else{
                 showEmptyData()
             }
