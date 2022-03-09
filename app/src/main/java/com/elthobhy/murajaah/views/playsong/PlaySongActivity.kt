@@ -53,6 +53,7 @@ class PlaySongActivity : AppCompatActivity() {
     }
 
     private fun initView(song: Song) {
+        checkButtonPrevNext()
         binding?.tvNameSong?.text = song.nameSong
         binding?.tvArtistName?.text = song.artistSong
         binding?.ivPlaySong?.let {
@@ -62,6 +63,22 @@ class PlaySongActivity : AppCompatActivity() {
                 .into(it)
         }
         playSong(song)
+    }
+
+    private fun checkButtonPrevNext() {
+        if(position==0){
+            binding?.btnPrevSong?.setColorFilter(ContextCompat.getColor(this,android.R.color.darker_gray))
+            binding?.btnPrevSong?.isEnabled = false
+        }else if(position>0 && position<songs?.size?.minus(1)!!){
+            binding?.btnPrevSong?.setColorFilter(ContextCompat.getColor(this,android.R.color.white))
+            binding?.btnPrevSong?.isEnabled = true
+
+            binding?.btnNextSong?.setColorFilter(ContextCompat.getColor(this,android.R.color.white))
+            binding?.btnNextSong?.isEnabled = true
+        }else{
+            binding?.btnNextSong?.setColorFilter(ContextCompat.getColor(this,android.R.color.darker_gray))
+            binding?.btnNextSong?.isEnabled = false
+        }
     }
 
     private fun playSong(song: Song) {
