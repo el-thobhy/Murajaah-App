@@ -14,6 +14,9 @@ import com.elthobhy.murajaah.R
 import com.elthobhy.murajaah.databinding.ActivityPlaySongBinding
 import com.elthobhy.murajaah.models.Song
 import com.elthobhy.murajaah.utils.toSongTime
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import java.lang.IllegalStateException
 
 class PlaySongActivity : AppCompatActivity() {
@@ -24,6 +27,50 @@ class PlaySongActivity : AppCompatActivity() {
     private var songs: MutableList<Song>? = null
     private var musicPlayer: MediaPlayer? = null
     private lateinit var handler: Handler
+    private var currentUser: FirebaseUser? = null
+    private lateinit var databaseMyTrack : DatabaseReference
+    private var isMyTrack = false
+
+    private val evenListener = object : ValueEventListener{
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val data = snapshot.value
+            if(data!=null){
+                val song = songs?.get(position)
+                databaseMyTrack
+                    .child(currentUser?.uid.toString())
+                    .child("my_tracks")
+                    .child(song?.keySong.toString())
+                    .setValue(song)
+
+                isMyTrack = true
+                checkLikeButton()
+            }else{
+                val song = songs?.get(position)
+                databaseMyTrack
+                    .child(currentUser?.uid.toString())
+                    .child("my_tracks")
+                    .child(song?.keySong.toString())
+                    .setValue(song)
+
+                isMyTrack = true
+                checkLikeButton()
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            Log.e("error", "onDataChange: ${error.message}", )
+        }
+    }
+
+    private fun checkLikeButton() {
+        if(isMyTrack){
+            binding?.btnAddTrack?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_playlist_add_check_24))
+            binding?.btnAddTrack?.setColorFilter(ContextCompat.getColor(this, android.R.color.white))
+        }else{
+            binding?.btnAddTrack?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_playlist_add_24))
+            binding?.btnAddTrack?.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,6 +196,11 @@ class PlaySongActivity : AppCompatActivity() {
     }
 
     private fun init(){
+        currentUser = FirebaseAuth.getInstance().currentUser
+        databaseMyTrack = FirebaseDatabase
+            .getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("users")
+
         handler = Handler(Looper.getMainLooper())
         musicPlayer = MediaPlayer()
         musicPlayer?.setAudioAttributes(
@@ -169,7 +221,7 @@ class PlaySongActivity : AppCompatActivity() {
             finish()
         }
         binding?.btnAddTrack?.setOnClickListener{
-
+            addMyTrack()
         }
         binding?.btnNextSong?.setOnClickListener {
             playNextSong()
@@ -188,6 +240,13 @@ class PlaySongActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun addMyTrack() {
+        databaseMyTrack
+            .child(currentUser?.uid.toString())
+            .child("my_tracks")
+            .addListenerForSingleValueEvent(evenListener)
     }
 
     private fun playNextSong() {
