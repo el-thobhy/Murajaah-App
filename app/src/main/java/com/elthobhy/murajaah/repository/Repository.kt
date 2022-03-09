@@ -88,7 +88,9 @@ object Repository {
             }
     }
     fun addDataImageToTopCharts(){
-        val databaseTopCharts = FirebaseDatabase.getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("top_charts")
+        val databaseTopCharts = FirebaseDatabase
+            .getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("top_charts")
         //mengambil data dari Database Storage
         FirebaseStorage
             .getInstance("gs://murajaah-f040b.appspot.com")
@@ -178,5 +180,47 @@ object Repository {
             }
 
         })
+    }
+    fun addDataImageToTopAlbum(){
+        val databaseTopAlbum = FirebaseDatabase
+            .getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("top_albums")
+        FirebaseStorage
+            .getInstance("gs://murajaah-f040b.appspot.com")
+            .reference
+            .child("images")
+            .listAll()
+            .addOnSuccessListener{ listResult->
+                listResult.items.forEach {item->
+                    item.downloadUrl
+                        .addOnSuccessListener {uri->
+                            val albumName = item.name.replace(".png","").trim()
+                            databaseTopAlbum.addListenerForSingleValueEvent(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    for (snap in snapshot.children){
+                                        val album = snap.getValue(Album::class.java)
+                                        if(album?.nameAlbum == albumName){
+                                            databaseTopAlbum.child(snap.key.toString())
+                                                .updateChildren(mapOf(
+                                                    "image_album" to uri.toString()
+                                                ))
+                                        }
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+
+                            })
+                        }
+                        .addOnFailureListener {e->
+                            Log.e("repo", "addDataImageToTopAlbum: ${e.message}", )
+                        }
+                }
+            }
+            .addOnFailureListener {e->
+                Log.e("repo", "addDataImageToTopAlbum: ${e.message}", )
+            }
     }
 }
