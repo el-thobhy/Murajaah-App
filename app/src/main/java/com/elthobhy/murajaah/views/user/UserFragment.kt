@@ -13,11 +13,13 @@ import com.elthobhy.murajaah.views.changepassword.ChangePasswordActivity
 import com.elthobhy.murajaah.views.edituser.EditUserActivity
 import com.elthobhy.murajaah.views.login.LoginActivity
 import com.elthobhy.murajaah.views.main.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class UserFragment : Fragment() {
 
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +33,7 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        auth = FirebaseAuth.getInstance()
         onClick()
     }
 
@@ -42,6 +45,7 @@ class UserFragment : Fragment() {
             startActivity(Intent(context, ChangePasswordActivity::class.java))
         }
         binding?.btnLogout?.setOnClickListener {
+            auth.signOut()
             startActivity(Intent(context,LoginActivity::class.java))
             (activity as MainActivity).finishAffinity()
         }

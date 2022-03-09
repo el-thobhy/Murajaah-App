@@ -22,4 +22,14 @@
     <string name="time_start">0:00</string>
     <string name="old_password">Old Password</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="email_empty_error">Please Field your email</string>
+    <string name="please_valid_email">please use valid email</string>
+    <string name="error_password_empty">please field your password</string>
+    <string name="erro">error</string>
+    <string name="please_field_fullname">Please Field YOur Fullname</string>
+    <string name="different_confirm_password">Confirm Password and Password is Not same</string>
+    <string name="succes">success</string>
+    <string name="account_created">Your Account has been created</string>
+    <string name="link_sent">link has been sent</string>
+    <string name="succes_change_pass">success change password</string>
 </resources>

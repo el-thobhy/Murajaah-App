@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
 //menambahkan data album
         //Repository.addDataToTopAlbum()
 //Menambahkan data Image ke Top Album
-        Repository.addDataImageToTopAlbum()
+        //Repository.addDataImageToTopAlbum()
         goToLogin()
     }
 
