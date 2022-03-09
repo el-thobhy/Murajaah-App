@@ -89,9 +89,18 @@ class PlaySongActivity : AppCompatActivity() {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if(musicPlayer!=null){
                         val currentTime = progress.toSongTime()
+                        val maxDuration = musicPlayer?.duration
                         binding?.tvStartTime?.text = currentTime
 
                         if(!musicPlayer?.isPlaying!!){
+                            binding?.tvStartTime?.text = musicPlayer?.currentPosition?.toSongTime()
+                        }
+
+                        if(progress==maxDuration){
+                            playNextSong()
+                        }
+
+                        if(musicPlayer?.isPlaying ==true){
                             binding?.tvStartTime?.text = musicPlayer?.currentPosition?.toSongTime()
                         }
 
@@ -169,6 +178,7 @@ class PlaySongActivity : AppCompatActivity() {
         if(position<songSize!!){
             position+=1
             val song = songs?.get(position)
+            musicPlayer?.reset()
             if(song!=null){
                 initView(song)
             }
@@ -179,6 +189,7 @@ class PlaySongActivity : AppCompatActivity() {
         if(position >0){
             position -= 1
             val song = songs?.get(position)
+            musicPlayer?.reset()
             if(song!=null){
                 initView(song)
             }
