@@ -15,8 +15,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Log.d("json topcharts", "onCreate: ${Repository.getFataTopAlbumFromAssets(this)?.size}")
-        Log.d("json topcharts", "onCreate: ${Repository.getFataTopChartFromAssets(this)?.size}")
+        //menambahkan dataTopCharts ke realtime firebase
+        Repository.addDataToTopCharts()
         goToLogin()
     }
 
