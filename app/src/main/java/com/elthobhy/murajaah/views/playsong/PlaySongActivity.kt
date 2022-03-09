@@ -8,7 +8,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.SeekBar
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.elthobhy.murajaah.R
 import com.elthobhy.murajaah.databinding.ActivityPlaySongBinding
 import com.elthobhy.murajaah.models.Song
 import com.elthobhy.murajaah.utils.toSongTime
@@ -69,6 +71,7 @@ class PlaySongActivity : AppCompatActivity() {
                 it.start()
                 binding?.tvStartEnd?.text = it?.duration?.toSongTime()
                 binding?.seekBarPlaySong?.max = it?.duration!!
+                checkMusicButton()
             }
             musicPlayer?.prepareAsync()
             handler.postDelayed(object : Runnable{
@@ -111,6 +114,14 @@ class PlaySongActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkMusicButton() {
+        if(musicPlayer?.isPlaying == true){
+            binding?.btnPlaySong?.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.icon_pause))
+        }else{
+            binding?.btnPlaySong?.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_baseline_play_circle_80))
+        }
+    }
+
     private fun init(){
         handler = Handler(Looper.getMainLooper())
         musicPlayer = MediaPlayer()
@@ -142,7 +153,13 @@ class PlaySongActivity : AppCompatActivity() {
 
         }
         binding?.btnPlaySong?.setOnClickListener {
-
+            if(musicPlayer?.isPlaying==true){
+                musicPlayer?.pause()
+                binding?.btnPlaySong?.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_baseline_play_circle_80))
+            }else{
+                musicPlayer?.start()
+                binding?.btnPlaySong?.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.icon_pause))
+            }
         }
 
     }
