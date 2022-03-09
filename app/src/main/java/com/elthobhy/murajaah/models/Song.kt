@@ -1,6 +1,7 @@
 package com.elthobhy.murajaah.models
 
 import android.os.Parcelable
+import com.google.firebase.database.PropertyName
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -8,23 +9,37 @@ import kotlinx.android.parcel.Parcelize
 data class Song(
 
 	@field:SerializedName("album_name_song")
-	val albumNameSong: String? = null,
+	@get:PropertyName("album_name_song")
+	@set:PropertyName("album_name_song")
+	var albumNameSong: String? = null,
 
 	@field:SerializedName("name_song")
-	val nameSong: String? = null,
+	@get:PropertyName("name_song")
+	@set:PropertyName("name_song")
+	var nameSong: String? = null,
 
 	@field:SerializedName("year_song")
-	val yearSong: Int? = null,
+	@get:PropertyName("year_song")
+	@set:PropertyName("year_song")
+	var yearSong: Int? = null,
 
 	@field:SerializedName("artist_song")
-	val artistSong: String? = null,
+	@get:PropertyName("artist_song")
+	@set:PropertyName("artist_song")
+	var artistSong: String? = null,
 
 	@field:SerializedName("uri_song")
-	val uriSong: String? = null,
+	@get:PropertyName("uri_song")
+	@set:PropertyName("uri_song")
+	var uriSong: String? = null,
 
 	@field:SerializedName("image_song")
-	val imageSong: String? = null,
+	@get:PropertyName("image_song")
+	@set:PropertyName("image_song")
+	var imageSong: String? = null,
 
 	@field:SerializedName("key_song")
-	val keySong: String? = null
+	@get:PropertyName("key_song")
+	@set:PropertyName("key_song")
+	var keySong: String? = null
 ) : Parcelable
