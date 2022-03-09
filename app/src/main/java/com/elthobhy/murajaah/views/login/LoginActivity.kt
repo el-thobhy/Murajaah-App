@@ -42,13 +42,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun onCLick() {
         binding?.btnLogin?.setOnClickListener {
-            val email = binding?.etEmail.toString().trim()
-            val password = binding?.etPassword.toString().trim()
+            val email = binding?.etEmail?.text.toString().trim()
+            val password = binding?.etPassword?.text.toString().trim()
 
             if(checkValidation(email,password)){
                 loginToServer(email, password)
             }
-            startActivity(Intent(this, MainActivity::class.java))
         }
         binding?.btnNewRegister?.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
@@ -67,11 +66,11 @@ class LoginActivity : AppCompatActivity() {
                 finishAffinity()
             }
             .addOnFailureListener {
-                hideLoading()
                 AlertDialog.Builder(this)
                     .setMessage(it.message)
                     .setTitle(getString(R.string.erro))
                     .show()
+                hideLoading()
             }
     }
 
@@ -92,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
             binding?.etEmail?.requestFocus()
         }else if(password.isEmpty()){
             binding?.etPassword?.error = getString(R.string.error_password_empty)
-            binding?.etEmail?.requestFocus()
+            binding?.etPassword?.requestFocus()
         }else{
             return true
         }
