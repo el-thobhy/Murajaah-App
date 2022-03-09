@@ -7,35 +7,55 @@
     android:layout_height="match_parent"
     tools:context=".views.mytrack.MyTrackFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
-        android:fillViewport="true">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:fillViewport="true">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/my_tracks"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:layout_margin="16dp"/>
+                android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_my_tracks"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_song"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_tracks"
+                    android:textColor="@color/white"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:layout_margin="16dp"/>
 
-        </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_my_tracks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_song"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <ImageView
+            android:id="@+id/emptyData"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:tint="#6A6969"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_article_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
