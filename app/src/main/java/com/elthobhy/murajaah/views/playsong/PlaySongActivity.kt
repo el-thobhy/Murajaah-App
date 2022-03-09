@@ -1,11 +1,18 @@
 package com.elthobhy.murajaah.views.playsong
 
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.widget.SeekBar
 import com.bumptech.glide.Glide
-import com.elthobhy.murajaah.R
 import com.elthobhy.murajaah.databinding.ActivityPlaySongBinding
 import com.elthobhy.murajaah.models.Song
+import com.elthobhy.murajaah.utils.toSongTime
+import java.lang.IllegalStateException
 
 class PlaySongActivity : AppCompatActivity() {
 
@@ -13,6 +20,8 @@ class PlaySongActivity : AppCompatActivity() {
     private val binding get() = _binding
     private var position = 0
     private var songs: MutableList<Song>? = null
+    private var musicPlayer: MediaPlayer? = null
+    private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +31,11 @@ class PlaySongActivity : AppCompatActivity() {
         init()
         getData()
         onClick()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        musicPlayer?.pause()
     }
 
     private fun getData() {
@@ -45,9 +59,68 @@ class PlaySongActivity : AppCompatActivity() {
                 .placeholder(android.R.color.darker_gray)
                 .into(it)
         }
+        playSong(song)
+    }
+
+    private fun playSong(song: Song) {
+        try {
+            musicPlayer?.setDataSource(song.uriSong)
+            musicPlayer?.setOnPreparedListener {
+                it.start()
+                binding?.tvStartEnd?.text = it?.duration?.toSongTime()
+                binding?.seekBarPlaySong?.max = it?.duration!!
+            }
+            musicPlayer?.prepareAsync()
+            handler.postDelayed(object : Runnable{
+                override fun run() {
+                    try {
+                        binding?.seekBarPlaySong?.progress = musicPlayer?.currentPosition!!
+                        handler.postDelayed(this, 1000)
+                    }catch (e:Exception){
+                        Log.e("error", "run: ${e.message}", )
+                    }
+                }
+
+            }, 0)
+            binding?.seekBarPlaySong?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    if(musicPlayer!=null){
+                        val currentTime = progress.toSongTime()
+                        binding?.tvStartTime?.text = currentTime
+
+                        if(!musicPlayer?.isPlaying!!){
+                            binding?.tvStartTime?.text = musicPlayer?.currentPosition?.toSongTime()
+                        }
+
+                        if(fromUser){
+                            musicPlayer?.seekTo(progress)
+                            seekBar?.progress = progress
+                        }
+                    }
+                }
+
+                override fun onStartTrackingTouch(p0: SeekBar?) {
+                }
+
+                override fun onStopTrackingTouch(p0: SeekBar?) {
+                }
+
+            })
+        }catch (e:IllegalStateException){
+            Log.e("playSong", "playSong: ${e.message}", )
+        }
     }
 
     private fun init(){
+        handler = Handler(Looper.getMainLooper())
+        musicPlayer = MediaPlayer()
+        musicPlayer?.setAudioAttributes(
+            AudioAttributes
+                .Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build()
+        )
+
         //setup actionbar
         setSupportActionBar(binding?.tbPlaySong)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -98,6 +171,15 @@ class PlaySongActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        musicPlayer?.stop()
+        musicPlayer=null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(musicPlayer!=null && !musicPlayer?.isPlaying!!){
+            musicPlayer?.start()
+        }
     }
 
     companion object{

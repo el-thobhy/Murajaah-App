@@ -18,3 +18,15 @@ fun View.visible(){
 fun View.gone(){
     visibility = View.VISIBLE
 }
+
+fun Int.toSongTime(): String{
+    var elapsedTime : String?
+    val minutes = this/1000/60
+    val seconds = this/1000%60
+    elapsedTime = "$minutes:"
+    if(seconds<10){
+        elapsedTime +="0"
+    }
+    elapsedTime+=seconds
+    return elapsedTime
+}
