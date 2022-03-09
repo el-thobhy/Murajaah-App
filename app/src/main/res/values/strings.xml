@@ -26,4 +26,8 @@
     <string name="please_valid_email">please use valid email</string>
     <string name="error_password_empty">please field your password</string>
     <string name="erro">error</string>
+    <string name="please_field_fullname">Please Field YOur Fullname</string>
+    <string name="different_confirm_password">Confirm Password and Password is Not same</string>
+    <string name="succes">success</string>
+    <string name="account_created">Your Account has been created</string>
 </resources>
