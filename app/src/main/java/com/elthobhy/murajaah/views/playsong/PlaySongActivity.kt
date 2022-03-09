@@ -252,7 +252,11 @@ class PlaySongActivity : AppCompatActivity() {
             finish()
         }
         binding?.btnAddTrack?.setOnClickListener{
-            addMyTrack()
+            if(isMyTrack){
+                removeMyTrack()
+            }else{
+                addMyTrack()
+            }
         }
         binding?.btnNextSong?.setOnClickListener {
             playNextSong()
@@ -273,6 +277,17 @@ class PlaySongActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun removeMyTrack() {
+        val song = songs?.get(position)
+        databaseMyTrack
+            .child(currentUser?.uid.toString())
+            .child("my_tracks")
+            .child(song?.keySong.toString())
+            .removeValue()
+        isMyTrack =false
+        checkLikeButton()
     }
 
     private fun addMyTrack() {
