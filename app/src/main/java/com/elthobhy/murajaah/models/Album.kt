@@ -2,6 +2,7 @@ package com.elthobhy.murajaah.models
 
 import android.os.Parcelable
 import com.google.firebase.database.Exclude
+import com.google.firebase.database.PropertyName
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -9,22 +10,34 @@ import kotlinx.android.parcel.Parcelize
 data class Album(
 
 	@field:SerializedName("name_album")
-	val nameAlbum: String? = null,
+	@get:PropertyName("name_album")
+	@set:PropertyName("name_album")
+	var nameAlbum: String? = null,
 
 	@field:SerializedName("songs")
-	val songs: List<Song>? = null,
+	@get:PropertyName("songs")
+	@set:PropertyName("songs")
+	var songs: List<Song>? = null,
 
 	@field:SerializedName("key_album")
-	val keyAlbum: String? = null,
+	@get:PropertyName("key_album")
+	@set:PropertyName("key_album")
+	var keyAlbum: String? = null,
 
 	@field:SerializedName("artist_album")
-	val artistAlbum: String? = null,
+	@get:PropertyName("artist_album")
+	@set:PropertyName("artist_album")
+	var artistAlbum: String? = null,
 
 	@field:SerializedName("year_album")
-	val yearAlbum: Int? = null,
+	@get:PropertyName("year_album")
+	@set:PropertyName("year_album")
+	var yearAlbum: Int? = null,
 
 	@field:SerializedName("image_album")
-	val imageAlbum: String? = null
+	@get:PropertyName("image_album")
+	@set:PropertyName("image_album")
+	var imageAlbum: String? = null
 ) : Parcelable{
 	@Exclude
 	fun getAlbum(): String{
