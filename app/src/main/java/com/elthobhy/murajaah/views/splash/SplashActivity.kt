@@ -18,7 +18,9 @@ class SplashActivity : AppCompatActivity() {
         //menambahkan dataTopCharts ke realtime firebase
         //Repository.addDataToTopCharts()
         //Menambahkna image ke dataTopCharts
-        Repository.addDataImageToTopCharts()
+//        Repository.addDataImageToTopCharts()
+        //menambahkan data album
+        Repository.addDataToTopAlbum()
         goToLogin()
     }
 

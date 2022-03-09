@@ -43,7 +43,9 @@ object Repository {
         }
     }
     fun addDataToTopCharts(){
-        val databaseTopCharts = FirebaseDatabase.getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("top_charts")
+        val databaseTopCharts = FirebaseDatabase
+            .getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("top_charts")
         val songs = mutableListOf<Song?>()
 
         //mengambil data dari firebase storage
@@ -125,5 +127,56 @@ object Repository {
             .addOnFailureListener {e->
                 Log.e("repo", "addDataImageToTopCharts: ${e.message}", )
             }
+    }
+    fun addDataToTopAlbum(){
+        val databaseTopAlbum  = FirebaseDatabase
+            .getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("top_albums")
+        val databaseTopCharts = FirebaseDatabase
+            .getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("top_charts")
+
+        val albums = mutableListOf<Album>()
+        var topCharts = mutableListOf<Song>()
+
+        databaseTopCharts.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val items = snapshot.children.toList()
+                val data = items.sortedWith(compareBy {
+                    it.getValue(Song::class.java)?.albumNameSong
+                })
+
+                for(i in data.indices){
+                    var nextSong : Song? = Song()
+                    if(i<data.size -1){
+                        nextSong = data[i+1].getValue(Song::class.java)
+                    }
+                    val song = data[i].getValue(Song::class.java)
+                    if(song != null ){
+                        topCharts.add(song)
+                    }
+
+                    if(song?.albumNameSong != nextSong?.albumNameSong){
+                        val keyAlbum = databaseTopAlbum.push().key
+                        albums.add(
+                            Album(
+                            artistAlbum = song?.artistSong,
+                            keyAlbum = keyAlbum,
+                            nameAlbum = song?.albumNameSong,
+                            yearAlbum = song?.yearSong,
+                            songs = topCharts
+                        )
+                        )
+                        topCharts = mutableListOf()
+                    }
+                }
+                databaseTopAlbum.setValue(albums)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("repo", "onCancelled: ${error.message}", )
+            }
+
+        })
     }
 }
