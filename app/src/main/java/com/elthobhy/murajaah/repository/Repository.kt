@@ -4,7 +4,10 @@ import android.content.Context
 import android.util.Log
 import com.elthobhy.murajaah.models.Album
 import com.elthobhy.murajaah.models.Song
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -80,6 +83,47 @@ object Repository {
             .addOnFailureListener { e->
                 Log.e("repo", "addDataToTopCharts: ${e.printStackTrace()}", )
                 Log.e("repo", "addDataToTopCharts: ${e.message}", )
+            }
+    }
+    fun addDataImageToTopCharts(){
+        val databaseTopCharts = FirebaseDatabase.getInstance("https://murajaah-f040b-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("top_charts")
+        //mengambil data dari Database Storage
+        FirebaseStorage
+            .getInstance("gs://murajaah-f040b.appspot.com")
+            .reference
+            .child("images")
+            .listAll()
+            .addOnSuccessListener{ listResult->
+                listResult.items.forEach {item->
+                    item.downloadUrl
+                        .addOnSuccessListener {uri->
+                            val albumName = item.name.replace(".png","").trim()
+                            databaseTopCharts.addListenerForSingleValueEvent(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    for (snap in snapshot.children){
+                                        val song = snap.getValue(Song::class.java)
+                                        if(song?.albumNameSong == albumName){
+                                            databaseTopCharts.child(snap.key.toString())
+                                                .updateChildren(mapOf(
+                                                    "image_song" to uri.toString()
+                                                ))
+                                        }
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.e("erro", "onCancelled: ${error.message}", )
+                                }
+
+                            })
+                        }
+                        .addOnFailureListener {e->
+                            Log.e("repo", "addDataImageToTopCharts: download ${e.message}", )
+                        }
+                }
+            }
+            .addOnFailureListener {e->
+                Log.e("repo", "addDataImageToTopCharts: ${e.message}", )
             }
     }
 }

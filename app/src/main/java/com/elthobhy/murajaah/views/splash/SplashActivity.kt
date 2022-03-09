@@ -16,7 +16,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         //menambahkan dataTopCharts ke realtime firebase
-        Repository.addDataToTopCharts()
+        //Repository.addDataToTopCharts()
+        //Menambahkna image ke dataTopCharts
+        Repository.addDataImageToTopCharts()
         goToLogin()
     }
 
