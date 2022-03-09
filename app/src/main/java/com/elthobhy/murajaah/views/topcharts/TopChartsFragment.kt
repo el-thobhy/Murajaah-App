@@ -2,18 +2,14 @@ package com.elthobhy.murajaah.views.topcharts
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.elthobhy.murajaah.R
 import com.elthobhy.murajaah.adapter.TopChartsAdapter
 import com.elthobhy.murajaah.databinding.FragmentTopChartsBinding
 import com.elthobhy.murajaah.models.Song
-import com.elthobhy.murajaah.repository.Repository
 import com.elthobhy.murajaah.utils.hide
 import com.elthobhy.murajaah.utils.visible
 import com.elthobhy.murajaah.views.playsong.PlaySongActivity
@@ -34,10 +30,10 @@ class TopChartsFragment : Fragment() {
             Log.e("cek data", "onDataChange: ${snapshot.value}", )
             val gson = Gson().toJson(snapshot.value)
             val type = object : TypeToken<MutableList<Song>>(){}.type
-            val song = Gson().fromJson<MutableList<Song>>(gson, type)
+            val albums = Gson().fromJson<MutableList<Song>>(gson, type)
 
-            if(song!=null){
-                topChartsAdapter.setData(song)
+            if(albums!=null){
+                topChartsAdapter.setData(albums)
             }
         }
 
